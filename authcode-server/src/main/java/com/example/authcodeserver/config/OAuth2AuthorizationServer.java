@@ -7,9 +7,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 /**
  * @Author sunjinwei
- * @Date  2019-06-20 23:16
- * @Description  授权服务器配置
-**/
+ * @Date 2019-06-20 23:16
+ * @Description 授权服务器配置
+ **/
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServer extends
@@ -17,7 +17,6 @@ public class OAuth2AuthorizationServer extends
 
 
     /**
-     *
      * @param clients
      * @throws Exception
      */
@@ -25,12 +24,12 @@ public class OAuth2AuthorizationServer extends
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
         clients.inMemory()  //使用内存存储
-            .withClient("myclient")   //分配 client_id
-            .secret("123")        //分配 client 的密码
-            .redirectUris("http://localhost:9001/callback") //拿到授权码之后如何跳转回客户端
-            // 授权码模式
-            .authorizedGrantTypes("authorization_code")
-            .scopes("read_userinfo", "read_contacts");  //允许的授权范围
+                .withClient("myclient")   //分配 client_id
+                .secret("123")        //分配 client 的密码
+                .redirectUris("http://localhost:9001/callback") //拿到授权码之后如何跳转回客户端
+                // 授权码模式
+                .authorizedGrantTypes("authorization_code")
+                .scopes("read_userinfo", "read_contacts");  //允许的授权范围
     }
 
 }
