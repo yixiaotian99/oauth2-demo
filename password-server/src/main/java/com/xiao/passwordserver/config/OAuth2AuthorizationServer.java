@@ -19,18 +19,19 @@ public class OAuth2AuthorizationServer extends
     /**
      * @param clients
      * @throws Exception
+     * @see https://www.cnblogs.com/bjlhx/p/9878450.html
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
         clients.inMemory()  //使用内存存储
                 .withClient("myclient")   //分配 client_id
-                .secret("123")        //分配 client 的密码
+                .secret("{noop}123")        //分配 client 的密码
                 .redirectUris("http://localhost:9001/callback") //拿到授权码之后如何跳转回客户端
 
                 // 密码模式 存储在 application.properties 中
-                .authorizedGrantTypes("password")
-                .scopes("read_userinfo", "read_contacts");  //允许的授权范围
+                .authorizedGrantTypes("client_credentials", "password", "refresh_token")
+                .scopes("read_userinfo");  //允许的授权范围
     }
 
 }
