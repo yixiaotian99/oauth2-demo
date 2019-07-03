@@ -31,10 +31,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/", "/index.html").permitAll().anyRequest().authenticated().and()
-                .formLogin().and()
-                .logout().permitAll().and()
-                .csrf().disable();
+                .authorizeRequests() //启动httpBasic登录身份认证
+                .antMatchers("/", "/index.html", "myLogin.html").permitAll() //这些页面不需要认证
+                .anyRequest().authenticated()  //所有请求都需要认证
+                .and()
+                .formLogin().loginPage("/myLogin").loginProcessingUrl("/login").permitAll() //自定义登录页面
+                .and().logout().permitAll() //登录和登出不需要认证
+                .and()
+                .csrf().disable(); //禁用跨站攻击
     }
 
     /**

@@ -38,6 +38,15 @@ public class MainPageController {
         return "index";
     }
 
+    /**
+     * 自定义登录界面
+     * @return
+     */
+    @GetMapping("/myLogin")
+    public String myLogin() {
+        return "myLogin";
+    }
+
     @GetMapping("/callback")
     public ModelAndView callback(String code, String state) {
         ClientUserDetails userDetails = (ClientUserDetails) SecurityContextHolder
