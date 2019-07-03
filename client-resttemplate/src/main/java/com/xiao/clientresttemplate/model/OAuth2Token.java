@@ -1,4 +1,4 @@
-package com.xiao.clientresttemplate.oauth;
+package com.xiao.clientresttemplate.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

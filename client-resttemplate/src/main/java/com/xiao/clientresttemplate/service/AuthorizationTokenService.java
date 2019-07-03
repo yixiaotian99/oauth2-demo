@@ -1,4 +1,4 @@
-package com.xiao.clientresttemplate.oauth;
+package com.xiao.clientresttemplate.service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xiao.clientresttemplate.model.OAuth2Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -17,10 +18,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class AuthorizationCodeTokenService {
+public class AuthorizationTokenService {
     @Autowired
-    private AuthorizationCodeConfiguration configuration;
+    private AuthorizationCodeService configuration;
 
+
+    /**
+     * 请求授权服务器授权
+     * @return
+     */
     public String getAuthorizationEndpoint() {
         String endpoint = "http://localhost:8080/oauth/authorize";
 
@@ -53,6 +59,11 @@ public class AuthorizationCodeTokenService {
         }
     }
 
+    /**
+     * 获取授权服务器返回 token
+     * @param authorizationCode
+     * @return
+     */
     public OAuth2Token getToken(String authorizationCode) {
         RestTemplate rest = new RestTemplate();
         String authBase64 = configuration.encodeCredentials("myclient",

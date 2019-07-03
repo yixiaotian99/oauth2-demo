@@ -1,4 +1,4 @@
-package com.xiao.clientresttemplate.oauth;
+package com.xiao.clientresttemplate.service;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @Component
-public class AuthorizationCodeConfiguration {
+public class AuthorizationCodeService {
 
     public String encodeCredentials(String username, String password) {
         String credentials = username + ":" + password;

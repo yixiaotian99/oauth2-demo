@@ -3,10 +3,10 @@ package com.xiao.clientresttemplate.controller;
 import com.xiao.clientresttemplate.dao.UserRepository;
 import com.xiao.clientresttemplate.model.ClientUser;
 import com.xiao.clientresttemplate.model.Entry;
+import com.xiao.clientresttemplate.model.OAuth2Token;
 import com.xiao.clientresttemplate.model.UserVO;
-import com.xiao.clientresttemplate.oauth.AuthorizationCodeTokenService;
-import com.xiao.clientresttemplate.oauth.OAuth2Token;
 import com.xiao.clientresttemplate.security.ClientUserDetails;
+import com.xiao.clientresttemplate.service.AuthorizationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -28,7 +28,7 @@ import java.util.Date;
 @Controller
 public class MainPageController {
     @Autowired
-    private AuthorizationCodeTokenService tokenService;
+    private AuthorizationTokenService tokenService;
 
     @Autowired
     private UserRepository users;
@@ -40,6 +40,7 @@ public class MainPageController {
 
     /**
      * 自定义登录界面
+     *
      * @return
      */
     @GetMapping("/myLogin")
@@ -47,6 +48,14 @@ public class MainPageController {
         return "myLogin";
     }
 
+
+    /**
+     * 授权服务器自动回调
+     *
+     * @param code
+     * @param state
+     * @return
+     */
     @GetMapping("/callback")
     public ModelAndView callback(String code, String state) {
         ClientUserDetails userDetails = (ClientUserDetails) SecurityContextHolder
@@ -66,12 +75,19 @@ public class MainPageController {
         return new ModelAndView("redirect:/mainpage");
     }
 
+
+    /**
+     * 授权后返回资源访问结果
+     *
+     * @return
+     */
     @GetMapping("/mainpage")
     public ModelAndView mainpage() {
         ClientUserDetails userDetails = (ClientUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         ClientUser clientUser = userDetails.getClientUser();
 
+        //未授权时浏览器重定向到授权端点
         if (clientUser.getAccessToken() == null) {
             String authEndpoint = tokenService.getAuthorizationEndpoint();
             return new ModelAndView("redirect:" + authEndpoint);
@@ -89,6 +105,13 @@ public class MainPageController {
         return mv;
     }
 
+
+    /**
+     * 获取资源服务器资源
+     *
+     * @param mv
+     * @param token
+     */
     private void tryToGetUserVO(ModelAndView mv, String token) {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
