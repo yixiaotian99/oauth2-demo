@@ -36,7 +36,8 @@ ost%3A9001%2Fcallback&scope=read_userinfo"
 
 ### 3. 调用API
 
-curl -X GET http://localhost:8080/api/userinfo -H "authorization: Bearer 36cded80-b6f5-43b7-bdfc-594788a24530"
+curl -X GET http://localhost:8080/api/userinfo 
+    -H "authorization: Bearer 36cded80-b6f5-43b7-bdfc-594788a24530"
 
 案例响应：
 

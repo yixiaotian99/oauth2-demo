@@ -14,12 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
  * @Description 解决登录页面不显示直接报错问题
  **/
 @Configuration
-@Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    //@Autowired
-    //private BootUserDetailService userDetailService;
-
 
     /**
      * 让Security 忽略这些url，不做拦截处理
@@ -47,24 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
     }
-
-
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService);
-    }
-
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
 
     /**
      * 解决 id null 问题
