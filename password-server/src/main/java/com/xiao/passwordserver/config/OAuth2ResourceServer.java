@@ -36,7 +36,6 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter {
                 .anonymous()
                 .and()
                 .authorizeRequests()
-
                 .antMatchers("/api/userinfo/**").authenticated();
 
     }
